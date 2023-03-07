@@ -1,0 +1,123 @@
+:root {
+    --deep-saffron: #f9a52c;
+    --lavender-indigo: #9b5fe0;
+    --blue: #16a4d8;
+    --sky-blue: #60dbe8;
+    --kiwi: #8bd346;
+    --minion-yellow: #efdf48;
+    --sinopia: #d64e12;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+body {
+    color: #FFF;
+    background-color: var(--deep-saffron);
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+}
+
+.todolist {
+    width: 100%;
+    max-width: 768px;
+}
+
+.todolist header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.todolist header h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--lavender-indigo);
+}
+
+.todolist header button {
+    color: var(--sinopia);
+    font-size: 18px;
+    border-bottom: 2px solid var(--kiwi);
+    text-transform: uppercase;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: var(--sky-blue);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.item:last-of-type {
+    margin-bottom: 0;
+}
+
+.item input[type="text"] {
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: 900;
+    color: var(--sinopia);
+    font-size: 20px;
+    flex: 1 1 0%;
+    margin-right: 1rem;
+}
+
+.item input[type="text"]:not(:disabled) {
+    border-bottom: 2px solid var(--kiwi);
+}
+
+.item.complete {
+    opacity: 0.7;
+}
+
+.item.complete input[type="text"] {
+    text-decoration: line-through;
+}
+
+.item:hover, .item:focus-within {
+    outline: 2px solid var(--kiwi);
+}
+
+.actions button {
+    color: var(--sinopia);
+    margin-right: 1rem;
+    opacity: 0.8;
+    transform: 0.1s;
+}
+
+.actions button.remove-btn {
+    color: crimson;
+}
+
+.actions button:hover {
+    opacity: 1;
+}
+
+.actions button:last-of-type {
+    margin-right: 0;
+}
