@@ -1,109 +1,91 @@
-const list_el = document.getElementById("list");
-const create_btn_el = document.getElementById("create")
+const list_todo = document.getElementById("list");
+const create_btn = document.getElementById("create");
 
 let todos = [];
 
-create_btn_el.addEventListener('click', CreateNewTodo);
+create_btn.addEventListener('click', NewTodo);
 
-function CreateNewTodo () {
-    const item = {
-        id: new Date().getTime(), text: "", complete: false
+function NewTodo () {
+    const task = {
+        id: new Date().getTime(),
+        text: "",
+        complete: false
     }
 
-    todos.unshift(item);
+    todos.unshift(task);
 
-    const { item_el, input_el } = CreateTodoElement(item);
+    const { task_todo, input_todo } = CreateTodoElement(task);
 
-    list_el.prepend(item_el);
+    list_todo.prepend(task_todo);
 
-    input_el.removeAttribute("disabled");
-    input_el.focus();
+    input_todo.removeAttribute("disabled");
+    input_todo.focus();
 
     Save();
 }
 
-function CreateTodoElement(item) {
-    const item_el = document.createElement("div")
-    item_el.classList.add("item");
 
-    const checkbox = document.createElement("input")
-    checkbox.type = "checkbox";
-    checkbox.checked = item.complete;
+function CreateTodoElement(task) {
+    const task_todo = document.createElement("div");
+    task_todo.classList.add("task");
 
-    if (item.complete) {
-        item_el.classList.add("complete");
+    const input_todo = document.createElement("input");
+    input_todo.type = "text";
+    input_todo.value = task.item;
+    input_todo.setAttribute("disabled", "");
+
+    const actions_todo = document.createElement("div");
+    actions_todo.classList.add("actions");
+
+    const edit_btn = document.createElement("button");
+    edit_btn.classList.add("edit-todo");
+    edit_btn.innerText = "Edit";
+
+    const delete_btn = document.createElement("button");
+    delete_btn.classList.add("delete-todo");
+    delete_btn.innerText = "Delete";
+
+    actions_todo.append(edit_btn);
+    actions_todo.append(delete_btn);
+
+    task_todo.append(input_todo);
+    task_todo.append(actions_todo);
+
+    input_todo.addEventListener("input", () => {
+        task.text = input_todo.value;
+    });
+
+    input_todo.addEventListener("blur", () => {
+    input_todo.setAttribute("disabled", "");
+
+    Save();
+    });
+
+    edit_btn.addEventListener("click", () => {
+        input_todo.removeAttribute("disabled");
+        input_todo.focus();
+    });
+
+    delete_btn.addEventListener("click", () => {
+        todos = todos.filter(t => t.id !=task.id);
+
+        task_todo.remove();
+
+        Save();
+    });
+
+    return { task_todo, input_todo, edit_btn, delete_btn}
     }
-
-    const input_el = document.createElement("input");
-    input_el.type = "text";
-    input_el.value = item.text;
-    input_el.setAttribute("disabled", "");
-
-    const actions_el = document.createElement("div");
-    actions_el.classList.add("actions")
-
-    const edit_btn_el = document.createElement("button");
-    edit_btn_el.classList.add("material-icons");
-    edit_btn_el.innerText = "Edit";
-
-    const delete_btn_el = document.createElement("button")
-    delete_btn_el.classList.add("material-icons", "delete-btn");
-    delete_btn_el.innerText = "Delete";
-
-    actions_el.append(edit_btn_el);
-    actions_el.append(delete_btn_el);
-
-    item_el.append(checkbox);
-    item_el.append(input_el);
-    item_el.append(actions_el);
-
-
-    checkbox.addEventListener("change", () => {
-        item.complete = checkbox.checked;
-
-        if (item.complete) {
-            item_el.classList.add("complete");
-        } else {
-            item_el.classList.delete("complete");
-        }
-
-        Save();
-    });
-
-    input_el.addEventListener("input", () => {
-        item.text = input_el.value;
-    });
-
-    input_el.addEventListener("blur", () => {
-        input_el.setAttribute("disabled", "");
-        Save();
-    });
-
-    edit_btn_el.addEventListener("click", () => {
-        input_el.removeAttribute("disabled");
-        input_el.focus();
-    });
-
-    delete_btn_el.addEventListener("click", () => {
-        todos = todos.filter(t => t.id != item.id);
-
-        item_el.delete();
-
-        Save();
-    });
-
-    return { item_el, input_el, edit_btn_el, delete_btn_el }
-}
 
 function DisplayTodos() {
     Load();
 
     for (let i = 0; i < todos.length; i++) {
-        const item = todos[i];
+        const task = todos[i];
 
-        const { item_el } = CreateTodoElement(item);
+        const { task_todo } = CreateTodoElement(task);
 
-        list_el.append(item_el);
+        list_todo.append(task_todo)
     }
 }
 
