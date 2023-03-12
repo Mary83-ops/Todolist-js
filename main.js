@@ -1,9 +1,9 @@
 const list_todo = document.getElementById("list");
-const create_btn = document.getElementById("create");
+const add_btn = document.getElementById("add");
 
 let todos = [];
 
-create_btn.addEventListener('click', NewTodo);
+add_btn.addEventListener('click', NewTodo);
 
 function NewTodo () {
     const task = {
